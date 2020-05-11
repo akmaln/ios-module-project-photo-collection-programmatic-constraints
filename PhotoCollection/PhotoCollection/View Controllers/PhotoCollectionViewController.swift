@@ -17,7 +17,28 @@ class PhotoCollectionViewController: UICollectionViewController {
         super.viewWillAppear(animated)
         
         collectionView?.reloadData()
+        configureCollectionView()
         setTheme()
+    }
+    
+    private func configureCollectionView() {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: 160, height: 190)
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        
+        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+        
+        view.addSubview(collectionView)
+        
+        collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoCell")
+
+        collectionView.dataSource = self
+        collectionView.delegate = self
+
+        self.collectionView = collectionView
     }
     
     // MARK: UICollectionViewDataSource
@@ -65,6 +86,7 @@ class PhotoCollectionViewController: UICollectionViewController {
             guard let destinationVC = segue.destination as? ThemeSelectionViewController else { return }
             
             destinationVC.themeHelper = themeHelper
+            destinationVC.delegate = self
             
         case "CreatePhoto":
             
@@ -88,19 +110,14 @@ class PhotoCollectionViewController: UICollectionViewController {
     }
 }
 
-extension PhotoDetailViewController: UICollectionViewDelegateFlowLayout {
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        }
-
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-            return 10
-        }
-
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: 160, height: 190)
+extension PhotoCollectionViewController: ThemeSelectionDelegate {
+    func didSetTheme() {
+        setTheme()
+        collectionView?.reloadData()
     }
 }
+
+
 
 
 

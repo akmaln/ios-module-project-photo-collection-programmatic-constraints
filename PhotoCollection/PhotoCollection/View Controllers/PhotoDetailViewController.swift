@@ -50,11 +50,12 @@ class PhotoDetailViewController: UIViewController, UIImagePickerControllerDelega
         addImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
+        titleTextField.textAlignment = .center
         titleTextField.placeholder = "Give this photo a title:"
         
         view.addSubview(titleTextField)
         
-        titleTextField.topAnchor.constraint(equalTo: addImageButton.topAnchor, constant: 20).isActive = true
+        titleTextField.topAnchor.constraint(equalTo: addImageButton.topAnchor, constant: 40).isActive = true
         titleTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40).isActive = true
         titleTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
         titleTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
